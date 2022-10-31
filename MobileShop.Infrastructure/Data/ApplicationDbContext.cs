@@ -2,6 +2,7 @@
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using MobileShop.Infrastructure.Data;
 
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -9,5 +10,12 @@
             : base(options)
         {
         }
+
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    base.OnModelCreating(builder);
+        //}
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
     }
 }
