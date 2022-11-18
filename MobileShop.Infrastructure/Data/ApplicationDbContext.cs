@@ -17,5 +17,8 @@
         //}
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Model> Models { get; set; }
+        public DbSet<Manufacturer> Manufacturer { get; set; }
+        public DbSet<Accessory> Accessories { get; set; }
     }
 }

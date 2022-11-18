@@ -12,10 +12,12 @@
     {
         [Key]
         public Guid Id { get; set; } = Guid.NewGuid();
-  
-        [Required]
-        [StringLength(50)]
-        public string? Brand { get; set; }
+
+        //[Required]
+        //[StringLength(50)]
+        //public string? Brand { get; set; }
+
+        public string? Name { get; set; }
 
         public IList<Product> Products { get; set; } = new List<Product>();
     }
