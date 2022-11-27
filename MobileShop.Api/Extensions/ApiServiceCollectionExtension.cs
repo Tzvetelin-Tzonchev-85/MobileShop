@@ -1,7 +1,7 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection
 {
     using Microsoft.EntityFrameworkCore;
-    using MobileShop.Infrasructure.Data;
+    using MobileShop.Infrastructure.Data;
 
     public static class ApiServiceCollectionExtension
     {
@@ -13,7 +13,7 @@
         public static IServiceCollection AddApiDbContexts(this IServiceCollection services, IConfiguration config)
         {
             var connectionString = config.GetConnectionString("DefaultConnection");
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<MobileShopDbContext>(options =>
     options.UseSqlServer(connectionString));
 
             return services;

@@ -3,19 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MobileShop.Infrasructure.Data;
+using MobileShop.Infrastructure.Data;
 
 #nullable disable
 
 namespace MobileShop.Infrastructure.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221118112448_MobileShopAdded")]
-    partial class MobileShopAdded
+    [DbContext(typeof(MobileShopDbContext))]
+    partial class MobileShopDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -236,15 +234,24 @@ namespace MobileShop.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Color")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("Accessories");
                 });
@@ -256,7 +263,9 @@ namespace MobileShop.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -270,14 +279,17 @@ namespace MobileShop.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Manufacturer");
+                    b.ToTable("Manufactures");
                 });
 
             modelBuilder.Entity("MobileShop.Infrastructure.Data.Model", b =>
@@ -290,7 +302,9 @@ namespace MobileShop.Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("TypeBatery")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -303,14 +317,13 @@ namespace MobileShop.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AccessoryId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Colour")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("Dimension")
                         .HasColumnType("int");
@@ -324,17 +337,19 @@ namespace MobileShop.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("OperationSystem")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AccessoryId");
 
                     b.HasIndex("CategoryId");
 
@@ -396,14 +411,19 @@ namespace MobileShop.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("MobileShop.Infrastructure.Data.Product", b =>
+            modelBuilder.Entity("MobileShop.Infrastructure.Data.Accessory", b =>
                 {
-                    b.HasOne("MobileShop.Infrastructure.Data.Accessory", "Accessory")
+                    b.HasOne("MobileShop.Infrastructure.Data.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("AccessoryId")
+                        .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("MobileShop.Infrastructure.Data.Product", b =>
+                {
                     b.HasOne("MobileShop.Infrastructure.Data.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
@@ -421,8 +441,6 @@ namespace MobileShop.Infrastructure.Migrations
                         .HasForeignKey("ModelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Accessory");
 
                     b.Navigation("Category");
 

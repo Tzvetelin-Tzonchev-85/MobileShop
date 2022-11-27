@@ -5,25 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MobileShop.Infrastructure.Migrations
 {
-    public partial class MobileShopAdded : Migration
+    public partial class MobileShopDB : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Accessories",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Color = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Amount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Accessories", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -68,7 +53,7 @@ namespace MobileShop.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,16 +61,16 @@ namespace MobileShop.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Manufacturer",
+                name: "Manufactures",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Country = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Manufacturer", x => x.Id);
+                    table.PrimaryKey("PK_Manufactures", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,7 +78,7 @@ namespace MobileShop.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TypeBatery = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TypeBatery = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Size = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -212,13 +197,12 @@ namespace MobileShop.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Dimension = table.Column<int>(type: "int", nullable: false),
-                    OperationSystem = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Colour = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    AccessoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OperationSystem = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Colour = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ManufacturerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ModelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -226,21 +210,15 @@ namespace MobileShop.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Products_Accessories_AccessoryId",
-                        column: x => x.AccessoryId,
-                        principalTable: "Accessories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Products_Manufacturer_ManufacturerId",
+                        name: "FK_Products_Manufactures_ManufacturerId",
                         column: x => x.ManufacturerId,
-                        principalTable: "Manufacturer",
+                        principalTable: "Manufactures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -250,6 +228,33 @@ namespace MobileShop.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Accessories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Color = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Amount = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Accessories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Accessories_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accessories_ProductId",
+                table: "Accessories",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -291,11 +296,6 @@ namespace MobileShop.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Products_AccessoryId",
-                table: "Products",
-                column: "AccessoryId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
@@ -313,6 +313,9 @@ namespace MobileShop.Infrastructure.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Accessories");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -338,13 +341,10 @@ namespace MobileShop.Infrastructure.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Accessories");
-
-            migrationBuilder.DropTable(
                 name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Manufacturer");
+                name: "Manufactures");
 
             migrationBuilder.DropTable(
                 name: "Models");

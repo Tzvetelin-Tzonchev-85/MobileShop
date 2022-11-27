@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MobileShop.Core.Constants;
-using MobileShop.Infrasructure.Data;
+using MobileShop.Infrastructure.Data;
 using MobileShop.ModelBinders;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationDbContexts(builder.Configuration);
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+    .AddEntityFrameworkStores<MobileShopDbContext>();
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
     {
@@ -20,7 +20,7 @@ builder.Services.AddControllersWithViews()
     });
 
 
-builder.Services.AddApplicationServices();
+builder.Services.ApplicationServices();
 
 var app = builder.Build();
 
@@ -44,6 +44,9 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+
+app.PrepareDatabase();
 
 app.MapControllerRoute(
     name: "default",
