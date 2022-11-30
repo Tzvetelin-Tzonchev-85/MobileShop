@@ -42,5 +42,11 @@
             public const int ProductsColourMinLenth = 3;
             public const int ProductsColourMaxLenth = 10;
         }
+
+        public class ApplicationUser
+        {
+            public const int FirstNameMaxLength = 50;
+            public const int LastNameMaxLength = 50;
+        }
     }
 }

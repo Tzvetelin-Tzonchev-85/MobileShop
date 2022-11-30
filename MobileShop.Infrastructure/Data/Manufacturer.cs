@@ -16,6 +16,7 @@
         [StringLength(ManifacturersCountryMaxLength)]
         public string? Country { get; set; }
 
+        //public Product Product { get; set; }
         public IList<Product> Products { get; set; } = new List<Product>();
 
         //public IList<Model> Models { get; set; } = new List<Model>();

@@ -2,8 +2,9 @@
 {
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+    using MobileShop.Infrastructure.Data.Identity;
 
-    public class MobileShopDbContext : IdentityDbContext
+    public class MobileShopDbContext : IdentityDbContext<ApplicationUser>
     {
         public MobileShopDbContext(DbContextOptions<MobileShopDbContext> options)
             : base(options)
@@ -19,5 +20,7 @@
         public DbSet<Model> Models { get; set; }
         public DbSet<Manufacturer> Manufactures { get; set; }
         public DbSet<Accessory> Accessories { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
     }
 }
