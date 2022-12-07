@@ -12,6 +12,13 @@ builder.Services.AddApplicationDbContexts(builder.Configuration);
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<MobileShopDbContext>();
+
+builder.Services.AddAuthentication()
+    .AddFacebook(options =>
+    {
+        options.AppId = "706296737585024";
+        options.AppSecret = "8c69ea2da76b89e7c33e8c9b122010c6";
+    });
 builder.Services.AddControllersWithViews()
     .AddMvcOptions(options =>
     {
