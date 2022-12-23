@@ -1,7 +1,10 @@
 ﻿namespace Microsoft.Extensions.DependencyInjection
 {
     using Microsoft.EntityFrameworkCore;
+    using MobileShop.Core.Contracts;
+    using MobileShop.Core.Services;
     using MobileShop.Infrastructure.Data;
+    using MobileShop.Infrastructure.Data.Repositories;
 
     public static class ServiceCollectionExtension
     {
@@ -18,6 +21,8 @@
 
         public static IServiceCollection ApplicationServices(this IServiceCollection services)
         {
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IApplicationDbRepository, ApplicationDbRepository>();
             return services;
         }
 
