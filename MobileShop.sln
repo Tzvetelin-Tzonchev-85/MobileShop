@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileShop.Core", "MobileSh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileShop.Infrastructure", "MobileShop.Infrastructure\MobileShop.Infrastructure.csproj", "{9B0011F3-A3EC-473B-8068-DFB0DECE9992}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileShop.Api", "MobileShop.Api\MobileShop.Api.csproj", "{C9AD7680-CED2-4271-B9CE-2B6357408030}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MobileShop.Api", "MobileShop.Api\MobileShop.Api.csproj", "{C9AD7680-CED2-4271-B9CE-2B6357408030}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileShop.Test", "MobileShop.Test\MobileShop.Test.csproj", "{A32DAE66-0494-44C9-9CCE-ED7CFF8E36CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{C9AD7680-CED2-4271-B9CE-2B6357408030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9AD7680-CED2-4271-B9CE-2B6357408030}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9AD7680-CED2-4271-B9CE-2B6357408030}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A32DAE66-0494-44C9-9CCE-ED7CFF8E36CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A32DAE66-0494-44C9-9CCE-ED7CFF8E36CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A32DAE66-0494-44C9-9CCE-ED7CFF8E36CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A32DAE66-0494-44C9-9CCE-ED7CFF8E36CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
